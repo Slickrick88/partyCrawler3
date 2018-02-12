@@ -127,8 +127,19 @@ function initMap() {
       key = $(this).data("key");
       console.log("Key Updated: " + key);
       //retrieves clicked record from database
+
+      console.log("key: " + key);
+      //listens for value updates in the items fields of the party selected
+      database.ref('/' + key + "/Items").on("child_added", function(childSnapshot, prvChildName) {
+        console.log("child changed");
+        var I= childSnapshot.key;
+        var person = childSnapshot.val().Who;
+        var stuff = childSnapshot.val().What;
+        $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>" + stuff + "</td></tr>");
+      });
       updateTable(key);
     });
+
 
     //updates the whoWhat table when value are added or updated 
     function updateTable() {
@@ -173,16 +184,8 @@ function initMap() {
       $("#who").val("");
       $("#what").val("");
       updateTable();
-    }
+    };
 
-    //listens for value updates in the items fields of the party selected
-    database.ref('/' + key+"/Items").on("child_added", function(childSnapshot, prvChildName) {
-      console.log("child changed");
-      var I= childSnapshot.key;
-      var person = childSnapshot.val().Who;
-      var stuff = childSnapshot.val().What;
-      $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>" + stuff + "</td></tr>");
-    });
 
     //function to pull back type of cloths
     function attireFun(cloths) {
