@@ -127,17 +127,16 @@ function initMap() {
       key = $(this).data("key");
       console.log("Key Updated: " + key);
       //retrieves clicked record from database
-
+      updateTable(key);
       console.log("key: " + key);
       //listens for value updates in the items fields of the party selected
-      database.ref('/' + key + "/Items").on("child_added", function(childSnapshot, prvChildName) {
+      database.ref('/' + key + "/Items").once("child_added", function(childSnapshot, prvChildName) {
         console.log("child changed");
         var I= childSnapshot.key;
         var person = childSnapshot.val().Who;
         var stuff = childSnapshot.val().What;
         $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>" + stuff + "</td></tr>");
       });
-      updateTable(key);
     });
 
 
