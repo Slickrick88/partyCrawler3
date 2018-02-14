@@ -1,5 +1,4 @@
 function initMap() {
-  console.log("google API Loaded");
   // this is where the map will start
   var charlotte = {
     coordinates: { lat: 35.2271, lng: -80.8431 }
@@ -31,7 +30,6 @@ function initMap() {
 
 
   $(document).ready(function () {
-    console.log("page loaded");
     var partyName;
     var partyTime;
     var eventType;
@@ -80,7 +78,6 @@ function initMap() {
     database.ref().on("child_added", function (childSnapshot, prevChildKey) {
 
       partyID = childSnapshot.key;
-      console.log("partyID: " + partyID);
       host = childSnapshot.val().Host;
       partyName = childSnapshot.val().Name;
       addy = childSnapshot.val().Location;
@@ -98,7 +95,6 @@ function initMap() {
 
       //refresh page every 24 hours
       setTimeout(function () {
-        console.log("is it working?");
         setInterval(decrement, 86400000);
 
         function decrement() {
@@ -119,30 +115,27 @@ function initMap() {
     });
 
     //populates the Who brings what section of the form
-    var table = $("#pendingEvents");//deleted .DataTable()
+    var table = $("#pendingEvents");
     $("#pendingEvents tbody").on("click", "tr", function () {
-      //remove items the were in the table previously
+      //remove items that were in the table previously
       $("#whoWhat tbody tr").remove();
       //gets the key from the row that is clicked so it can retrieve data from firebase
       key = $(this).data("key");
-      console.log("Key Updated: " + key);
-      //retrieves clicked record from database
-      updateTable(key);
-      console.log("key: " + key);
       //listens for value updates in the items fields of the party selected
-      database.ref('/' + key + "/Items").once("child_added", function(childSnapshot, prvChildName) {
-        console.log("child changed");
-        var I= childSnapshot.key;
+      database.ref('/' + key + "/Items").on("child_added", function (childSnapshot, prvChildName) {
+        console.log("item added");
+        var I = childSnapshot.key;
         var person = childSnapshot.val().Who;
         var stuff = childSnapshot.val().What;
-        $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>" + stuff + "</td></tr>");
+        $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>"
+          + stuff + "</td></tr>");
       });
     });
 
 
     //updates the whoWhat table when value are added or updated 
     function updateTable() {
-      console.log("Update function called" + " key is: "+key);
+      console.log("Update function called" + " key is: "+ key);
       $("#whoWhat tbody tr").remove();
       reference = database.ref('/' + key);
       reference.child("Items").once('value', gotData);
@@ -152,8 +145,8 @@ function initMap() {
           var I = itemSnapshot.key;
           var person = itemSnapshot.val().Who;
           var stuff = itemSnapshot.val().What;
-          console.log("add item back");
-          $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>" + stuff + "</td></tr>");
+          $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>" 
+          + stuff + "</td></tr>");
         });
       };
     };
@@ -179,7 +172,7 @@ function initMap() {
     });
 
     //clear input for new items
-    function clearItems(){
+    function clearItems() {
       $("#who").val("");
       $("#what").val("");
       updateTable();
@@ -188,7 +181,6 @@ function initMap() {
 
     //function to pull back type of cloths
     function attireFun(cloths) {
-      console.log("cloths: " + cloths);
       if (cloths == 1) {
         return "Casual";
       } else if (cloths == 2) {
@@ -208,7 +200,6 @@ function initMap() {
 
     //function to pull back type of party
     function eventTypeFunc(type) {
-      console.log("event Type: " + type);
       if (cloths == 1) {
         return "Block Party";
       } else if (cloths == 2) {
@@ -227,7 +218,6 @@ function initMap() {
     };
 
     function kidsFunc(kids) {
-      console.log("kids: " + kids);
       if (cloths == 1) {
         return "Children allowed";
       } else {
@@ -243,7 +233,6 @@ function initMap() {
       if (count < eventNameArray.length) {
         eventName = eventNameArray[count];
         addressToSearch = addressArray[count];
-
         searchAndAdd();
       }
       count++;
@@ -271,8 +260,6 @@ function initMap() {
           lat: eventLat,
           lng: eventLng
         };
-        console.log("lat: " + eventLat + ", lng: " + eventLng);
-
 
         tempCoords.coordinates = formatLocation;
         addMarker(tempCoords);
