@@ -21,10 +21,16 @@ body {
     background: darkgrey;
   }
   
-  tr:hover {
+  .rowID:hover {
     background-color: black;
     color: white;
   }
+
+  .itemID:hover {
+    background-color: black;
+    color: white;
+  }
+
 
 
 #pendingEvents{ 

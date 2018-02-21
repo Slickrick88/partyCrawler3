@@ -11,32 +11,35 @@
   <title>Really Sweet App</title>
 </head>
 
-  <div class="container">
+<div class="container">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Party Crawler</a>
-        </div>
-  
-        <ul class="nav navbar-nav">
-          <li class="active">
-            <a href="index.html">Events</a>
-          </li>
-          <li>
-            <a href="html/PartyCrawler.html">Create Event</a>
-          </li>
-        </ul>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Party Crawler</a>
       </div>
-    </nav>
+
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a href="index.html">Events</a>
+        </li>
+        <li>
+          <a href="html/PartyCrawler.html">Create Event</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
   <body>
 
     <div class="row">
       <div class="col-lg-12"></div>
     </div>
 
-    <div class="container">
-      <h2>My Events</h2>
+    <div class="container" id="eventstable">
+      <div id="eventList" state="off">
+        <h2>My Events</h2>
+      </div>
       <table class="table table-bordered" id="pendingEvents">
         <thead>
           <tr>
@@ -61,7 +64,9 @@
           <div class=additionalData id="partyKids"></div>
           <div class=additionalData id="partyDesc"></div>
         </div>
-        <h2>Who's Bringing What?</h2>
+        <div class="row">
+            <h2>Who's Bringing What?</h2>
+        </div>
         <div class="row">
           <div class="form-group col-sm-4">
             <label for="who">Your Name</label>
@@ -72,8 +77,15 @@
             <input type="text" class="form-control" id="what">
           </div>
         </div>
-        <button type ="submit" id="itemAdd">Add Item</button>
-        <br>
+        <div class="row">
+          <div class="form-group col-sm-6">
+            <button type="submit" id="itemAdd">Add Item</button>
+          </div>
+          <div class="form-group col-sm-6">
+              <button type="submitBack" id="backToPartyList">Party List</button>
+            </div>
+          <br>
+        </div>
         <table class="table table-bordered" id="whoWhat">
           <thead>
             <tr>
@@ -87,24 +99,25 @@
           </tbody>
         </table>
         <br>
+        <br>
       </div>
     </div>
-  </div>
+</div>
 
-  
-      
-  <div id="map"></div>
-   
 
- </div>
-  </div>
-  
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWa5eHnMAMi6rkFWh1pg_Ssxz8lTN6lQk&callback=initMap"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  
+
+<div id="map"></div>
+
+
+</div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWa5eHnMAMi6rkFWh1pg_Ssxz8lTN6lQk&callback=initMap"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
 </body>
 
 </html>

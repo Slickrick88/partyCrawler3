@@ -30,6 +30,10 @@ function initMap() {
 
 
   $(document).ready(function () {
+    //hide container until called
+    $("#popUpContainer").hide()
+
+    //global variables
     var partyName;
     var partyTime;
     var eventType;
@@ -117,6 +121,7 @@ function initMap() {
     //populates the Who brings what section of the form
     var table = $("#pendingEvents");
     $("#pendingEvents tbody").on("click", "tr", function () {
+      ShowEvents();
       //remove items that were in the table previously
       $("#whoWhat tbody tr").remove();
       //gets the key from the row that is clicked so it can retrieve data from firebase
@@ -132,10 +137,32 @@ function initMap() {
       });
     });
 
+    //updates views to show either the events table of the items table
+    function ShowEvents() {
+      var crntState = $("#eventList").attr("state");
+      console.log("trigger: " + crntState);
+      if (crntState === "off") {
+        $("#pendingEvents").fadeToggle("slow", function () {
+          $("#popUpContainer").fadeToggle();
+        });
+        $("#eventList").attr("state", "on");
+      } else {
+        $("#popUpContainer").fadeToggle("slow", function () {
+          $("#pendingEvents").fadeToggle();
+        });
+        $("#eventList").attr("state", "off");
+      };
+    };
+
+    //bring back event list
+    $("#backToPartyList").on("click", function () {
+      console.log("back to partyu list executed");
+      ShowEvents();
+    });
 
     //updates the whoWhat table when value are added or updated 
     function updateTable() {
-      console.log("Update function called" + " key is: "+ key);
+      console.log("Update function called" + " key is: " + key);
       $("#whoWhat tbody tr").remove();
       reference = database.ref('/' + key);
       reference.child("Items").once('value', gotData);
@@ -145,8 +172,8 @@ function initMap() {
           var I = itemSnapshot.key;
           var person = itemSnapshot.val().Who;
           var stuff = itemSnapshot.val().What;
-          $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>" 
-          + stuff + "</td></tr>");
+          $("#whoWhat > tbody").append("<tr class='itemID' data-key='" + I + "'><td class=who'>" + person + "</td><td class='what'>"
+            + stuff + "</td></tr>");
         });
       };
     };
